@@ -1,5 +1,4 @@
 pyrogram==1.2.20
-pyromod
 Pillow
 TgCrypto
 requests
