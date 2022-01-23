@@ -20,7 +20,9 @@ async def pdf2docx_(client, message):
         else:
              await message.reply("Unsupported file!")
     except BaseException:
-        await msg.edit("Balaskan perintah pada sebuah dokumen.pdf !")
+        await msg.delete()
+        await message.reply("Balaskan perintah pada sebuah dokumen.pdf !")
+
 
 @Client.on_message(filters.command("text2docx"))
 async def text2docx_(client, message):
