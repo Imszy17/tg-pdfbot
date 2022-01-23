@@ -6,18 +6,24 @@ from pyrogram import Client, filters
 
 LIST = {}
 
-@Client.on_message(filters.private & filters.photo)
+@Client.on_message(filters.command("addpic"))
 async def pdf(client, message):
-    id = message.from_user.id
-    if not isinstance(LIST.get(id), list):
-       LIST[id] = []
-    file_id = str(message.photo.file_id)
-    text = await message.reply_text("```Processing...```")
-    file = await client.download_media(file_id)
-    image = Image.open(file)
-    img = image.convert('RGB')
-    LIST[id].append(img)
-    await text.edit(f"{len(LIST[id])} Gambar berhasil ditambahkan, klik **/pdf** untuk membuat pdf, atau tambahkan gambar lainnya")
+    replied = message.reply_to_message
+    try:
+        if replied.photo:
+             id = message.from_user.id
+             if not isinstance(LIST.get(id), list):
+                LIST[id] = []
+             file_id = str(replied.photo.file_id)
+             text = await message.reply_text("`Memproses...`")
+             file = await client.download_media(file_id)
+             image = Image.open(file)
+             img = image.convert('RGB')
+             LIST[id].append(img)
+             await text.edit(f"{len(LIST[id])} Gambar berhasil ditambahkan, klik **/pdf** untuk membuat pdf, atau tambahkan gambar lainnya")
+    except BaseException:
+        await message.reply("Balaskan perintah pada gambar yang akan dikonversi ke .pdf !")
+
 
 @Client.on_message(filters.command(['pdf']))
 async def convert(client, message):

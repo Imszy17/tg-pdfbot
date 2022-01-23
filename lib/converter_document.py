@@ -9,14 +9,14 @@ async def pdf2docx_(client, message):
     msg = await message.reply("`Memproses...`")
     replied = message.reply_to_message
     userID = message.from_user.id
-    if replied.document:
-         file = await client.download_media(replied, file_name=f"{userID}_in.pdf")
-         doc = words.Document(file)
-         doc.save(f"{userID}_out.docx")
-         await msg.edit("Selesai ⬇️")
-         await client.send_document(document=f"{userID}_out.docx", chat_id=userID)
-    elif not replied.document:
-         await message.reply("Balaskan perintah pada sebuah gambar!")
-    else:
-         await message.reply("Unsupported file!")
-
+    try:
+        if replied.document:
+             file = await client.download_media(replied, file_name=f"{userID}_in.pdf")
+             doc = words.Document(file)
+             doc.save(f"{userID}_out.docx")
+             await msg.edit("Selesai ⬇️")
+             await client.send_document(document=f"{userID}_out.docx", chat_id=userID)
+        else:
+             await message.reply("Unsupported file!")
+    except BaseException:
+        await message.reply("Balaskan perintah pada sebuah dokumen.pdf !")
