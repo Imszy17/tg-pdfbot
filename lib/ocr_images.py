@@ -31,18 +31,18 @@ async def ocr(client, message):
                 "`Kode bahasa salah, atau tidak didukung!`", parse_mode="md"
             )
     try:
-       if replied.photo:
-           msg = await message.reply("`Memproses gambar...`")
-           image = await client.download_media(
-               replied, file_name=f"text_{message.from_user.id}.jpg"
-           )
-           img = Image.open(image)
-           text = pytesseract.image_to_string(img, lang=f"{lang_code}")
-           try:
-               await msg.edit(text[:-1])
-           except MessageEmpty:
-               return await message.reply("Teks tidak dapat diproses")
-       else:
-           await message.reply("input not found")
+        if replied.photo:
+            msg = await message.reply("`Memproses gambar...`")
+            image = await client.download_media(
+                replied, file_name=f"text_{message.from_user.id}.jpg"
+            )
+            img = Image.open(image)
+            text = pytesseract.image_to_string(img, lang=f"{lang_code}")
+            try:
+                await msg.edit(text[:-1])
+            except MessageEmpty:
+                return await message.reply("Teks tidak dapat diproses")
+        else:
+            await message.reply("input not found")
     except BaseException:
-       await message.reply("Balaskan perintah pada sebuah gambar!")
+        await message.reply("Balaskan perintah pada sebuah gambar!")
