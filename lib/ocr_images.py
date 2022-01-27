@@ -31,7 +31,7 @@ async def ocr(client, message):
                 "`Kode bahasa salah, atau tidak didukung!`", parse_mode="md"
             )
     try:
-        if replied.photo:
+        if replied.photo or replied.document:
             msg = await message.reply("`Memproses gambar...`")
             image = await client.download_media(
                 replied, file_name=f"text_{message.from_user.id}.jpg"
