@@ -1,3 +1,5 @@
+import os
+
 from aspose import words
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -15,6 +17,8 @@ async def pdf2docx_(client, message):
             doc.save(f"{userID}_out.docx")
             await msg.edit("Selesai ⬇️")
             await client.send_document(document=f"{userID}_out.docx", chat_id=userID)
+            os.remove(file)
+            os.remove(f"{userID}_out.docx")
         else:
             await message.reply("Unsupported file!")
     except BaseException:
@@ -40,5 +44,6 @@ async def text2docx_(client, message):
         await client.send_document(
             document=f"{message.from_user.id}_output.docx", chat_id=message.from_user.id
         )
+        os.remove(f"{message.from_user.id_output.docx")
     except Exception as e:
         await msg.edit(e)

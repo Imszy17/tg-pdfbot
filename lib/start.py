@@ -8,7 +8,8 @@ __1. Mengubah beberapa gambar menjadi file .pdf
 2. Konversi file .pdf ke .docx tanpa menghilangkan spasi
 3. Membaca text pada sebuah gambar dengan teknologi OCR__
 
-⚠️ `Bot dalam masa pengembangan, mungkin dapat aktif dan nonaktif secara tiba-tiba`
+⚠️ `Bot dalam masa pengembangan, mungkin dapat aktif dan nonaktif secara tiba-tiba dan tanpa pemberitahuan`
+
 👨‍💻 **Pengembang:** @gmardiana
 """
 
