@@ -44,6 +44,6 @@ async def text2docx_(client, message):
         await client.send_document(
             document=f"{message.from_user.id}_output.docx", chat_id=message.from_user.id
         )
-        os.remove(f"{message.from_user.id_output.docx")
+        os.remove(f"{message.from_user.id}_output.docx")
     except Exception as e:
         await msg.edit(e)
