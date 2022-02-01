@@ -15,7 +15,7 @@ async def ocr(client, message):
     except BaseException:
         lang_code = "eng"
     db_url = (
-        f"https://github.com/tesseract-ocr/tessdata/raw/main/{lang_code}.traineddata"
+        f"https://github.com/galihmrd/tessdata/raw/main/{lang_code}.traineddata"
     )
     replied = message.reply_to_message
     dirs = r"./vendor/data/tessdata"
