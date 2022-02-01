@@ -37,11 +37,11 @@ async def ocr(client, message):
             img = Image.open(image)
             text = pytesseract.image_to_string(img, lang=f"{lang_code}")
             try:
-                await msg.edit(text[:-1])
+                await msg.edit(f"`{text[:-1]}`")
                 os.remove(image)
             except MessageEmpty:
                 return await message.reply("Teks tidak dapat diproses")
         else:
             await message.reply("input not found")
     except Exception as e:
-        await msg.edit(f"**Kesalahan:** {e}")
+        await msg.edit(f"**Kesalahan:** `{e}`")
