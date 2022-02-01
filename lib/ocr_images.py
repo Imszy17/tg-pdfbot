@@ -14,9 +14,7 @@ async def ocr(client, message):
         lang_code = message.command[1]
     except BaseException:
         lang_code = "eng"
-    db_url = (
-        f"https://github.com/galihmrd/tessdata/raw/main/{lang_code}.traineddata"
-    )
+    db_url = f"https://github.com/galihmrd/tessdata/raw/main/{lang_code}.traineddata"
     replied = message.reply_to_message
     dirs = r"./vendor/data/tessdata"
     path = os.path.join(dirs, f"{lang_code}.traineddata")
