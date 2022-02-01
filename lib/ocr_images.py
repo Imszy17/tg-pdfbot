@@ -45,5 +45,5 @@ async def ocr(client, message):
                 return await message.reply("Teks tidak dapat diproses")
         else:
             await message.reply("input not found")
-    except BaseException:
-        await message.reply("Balaskan perintah pada sebuah gambar!")
+    except Exception as e:
+        await msg.edit(f"**Kesalahan:** {e}")
