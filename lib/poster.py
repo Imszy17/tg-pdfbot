@@ -1,8 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-
-
 template = f"""
 **{tmp[0]}**
 **Build Type:** {tmp[1]}
