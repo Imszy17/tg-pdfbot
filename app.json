@@ -16,10 +16,7 @@
         "API_HASH": {
             "description": "Your Telegram API HASH",
             "required": true
-	},
-	"BOT_LOG": {
-	    "description": "ID of bot log",
-	    "required": true
+	}
 }
     },
     "buildpacks": [

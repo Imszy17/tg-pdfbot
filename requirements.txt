@@ -1,7 +1,3 @@
 pyrogram==1.2.20
-Pillow
 TgCrypto
-requests
-pytesseract
-wget
-aspose-words
+
