@@ -1,4 +1,5 @@
 from io import BytesIO
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
@@ -13,6 +14,7 @@ async def adduserlist(client, message):
         await message.reply("`User added to list!`")
     except Exception as e:
         await message.reply("Error: " + e)
+
 
 @Client.on_message(filters.command("listuser"))
 async def listsuser(client, message):

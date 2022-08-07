@@ -3,7 +3,6 @@ from pyrogram.types import Message
 
 from database.list_user_db import add_user_list, rem_user_list
 
-
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
 
 **💡 Fitur:**
@@ -23,6 +22,8 @@ async def start(client, message):
         mention = message.from_user.mention
         id = message.from_user.id
         add_user_list(int(id))
-        await message.reply(f"**Hai {mention}** 👋\n{START_MSG}", disable_web_page_preview=True)
+        await message.reply(
+            f"**Hai {mention}** 👋\n{START_MSG}", disable_web_page_preview=True
+        )
     except Exception as e:
         await message.reply("Kesalahan sistem!\n" + e)
