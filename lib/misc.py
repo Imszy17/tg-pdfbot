@@ -22,9 +22,12 @@ async def listsuser(client, message):
         users.append(i)
     chatfile = "Daftar ID pengguna:\n"
     P = 1
-    for user in users
-        chatfile += "{}. {}".format(P, user)
-        P = P + 1
+    for user in users:
+        try:
+            chatfile += "{}. {}".format(P, user)
+            P = P + 1
+        except:
+            pass
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "userlist.txt"
         await message.reply_document(document=output, disable_notification=True)
