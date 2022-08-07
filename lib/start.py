@@ -1,6 +1,9 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
+from database.list_user_db import add_user_list, rem_user_list
+
+
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
 
 **💡 Fitur:**
@@ -16,5 +19,10 @@ __1. Mengubah beberapa gambar menjadi file .pdf
 
 @Client.on_message(filters.command("start"))
 async def start(client, message):
-    id = message.from_user.mention
-    await message.reply(f"**Hai {id}** 👋\n{START_MSG}", disable_web_page_preview=True)
+    try:
+        mention = message.from_user.mention
+        id = message.from_user.id
+        add_user_list(int(id))
+        await message.reply(f"**Hai {mention}** 👋\n{START_MSG}", disable_web_page_preview=True)
+    except Exception as e:
+        await message.reply("Kesalahan sistem!\n" + e)
