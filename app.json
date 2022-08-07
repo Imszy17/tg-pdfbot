@@ -20,14 +20,21 @@
 	"BOT_LOG": {
 	    "description": "ID of bot log",
 	    "required": true
-}
     },
     "buildpacks": [
-      {
-        "url": "https://github.com/samadii/heroku-buildpack-tesseract"
-      },
-      {
-        "url": "heroku/python"
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "12"
       }
-    ]
+    }
+  ]
 }
