@@ -20,6 +20,7 @@
 	"BOT_LOG": {
 	    "description": "ID of bot log",
 	    "required": true
+        }
     },
 
   "buildpacks": [
