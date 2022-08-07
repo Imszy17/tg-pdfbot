@@ -4,6 +4,7 @@ from PIL import Image
 from pyrogram import Client, filters
 
 from config import BOT_LOG
+from database.list_user_db import add_user_list
 
 LIST = {}
 
@@ -14,6 +15,7 @@ async def pdf(client, message):
     try:
         if replied.photo:
             id = message.from_user.id
+            add_user_list(int(id))
             if not isinstance(LIST.get(id), list):
                 LIST[id] = []
             file_id = str(replied.photo.file_id)
@@ -36,6 +38,7 @@ async def convert(client, message):
     log_id = int(BOT_LOG)
     msg = await message.reply("Memproses...")
     id = message.from_user.id
+    add_user_list(int(id))
     info = message.from_user.mention
     images = LIST.get(id)
     if isinstance(images, list):
