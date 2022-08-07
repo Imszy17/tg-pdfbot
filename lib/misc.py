@@ -26,7 +26,12 @@ async def listsuser(client, message):
     P = 1
     for user in users:
         try:
-            chatfile += "{}. {}".format(P, user)
+            usr = await client.get_user(user)
+            name = usr.first_name
+        except:
+            name = "Null"
+        try:
+            chatfile += "{}. {} | {}\n".format(P, user, name)
             P = P + 1
         except:
             pass
