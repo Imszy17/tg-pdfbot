@@ -34,6 +34,7 @@ async def mode_pdf_cb(b, cb):
     except Exception as e:
         await cb.message.edit(e)
 
+
 @Client.on_callback_query(filters.regex(pattern=r"mode_ocr"))
 async def mode_ocr_cb(b, cb):
     id = cb.message.from_user.id
