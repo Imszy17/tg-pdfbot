@@ -19,7 +19,8 @@ __1. Mengubah beberapa gambar menjadi file .pdf
 
 @Client.on_callback_query(filters.regex(pattern=r"mode_pdf"))
 async def mode_pdf_cb(b, cb):
-    add_user_pdf()
+    id = cb.message.chat.id
+    add_user_pdf(int(id))
     await cb.message.edit("Mode diubah ke pdf")
 
 
