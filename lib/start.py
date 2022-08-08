@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
-
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
+from database.pdf_db import add_pdf_list, list_pdf_user
 from database.list_user_db import add_user_list, rem_user_list
 
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
@@ -16,14 +16,36 @@ __1. Mengubah beberapa gambar menjadi file .pdf
 """
 
 
+@Client.on_callback_query(filters.regex(pattern=r"mode_pdf"))
+async def mode_pdf_cb(b, cb):
+    add_pdf_list()
+    await cb.message.reply("Mode diubah ke pdf")
+
+
 @Client.on_message(filters.command("start"))
 async def start(client, message):
-    try:
-        mention = message.from_user.mention
-        id = message.from_user.id
-        add_user_list(int(id))
-        await message.reply(
-            f"**Hai {mention}** 👋\n{START_MSG}", disable_web_page_preview=True
-        )
-    except Exception as e:
-        await message.reply("Kesalahan sistem!\n" + e)
+   keyboard = InlineKeyboardMarkup(
+       [
+           [
+               InlineKeyboardButton(
+                   "PDF",
+                   callback_data="mode_pdf"),
+               InlineKeyboardButton(
+                   "OCR",
+                   callback_data="cls"),
+           ],
+       ])
+    user_id = message.from_user.id
+    pdf_user = list_pdf_user()
+    if user_id not in pdf_user:
+        await message.reply("Silahkan pilih mode!", reply_markup=keyboard)
+    else:
+        try:
+            mention = message.from_user.mention
+            id = message.from_user.id
+            add_user_list(int(id))
+            await message.reply(
+                f"**Hai {mention}** 👋\n{START_MSG}", disable_web_page_preview=True
+            )
+        except Exception as e:
+            await message.reply("Kesalahan sistem!\n" + e)
