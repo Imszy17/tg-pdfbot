@@ -1,7 +1,8 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
-from database.pdf_db import add_pdf_list, list_pdf_user
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
 from database.list_user_db import add_user_list, rem_user_list
+from database.pdf_db import add_pdf_list, list_pdf_user
 
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
 
@@ -27,12 +28,8 @@ async def start(client, message):
     keyboard = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton(
-                    "PDF",
-                    callback_data="mode_pdf"),
-                InlineKeyboardButton(
-                    "OCR",
-                    callback_data="cls"),
+                InlineKeyboardButton("PDF", callback_data="mode_pdf"),
+                InlineKeyboardButton("OCR", callback_data="cls"),
             ],
         ]
     )
