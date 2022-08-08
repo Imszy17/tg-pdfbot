@@ -1,12 +1,13 @@
 import os
+
 from PIL import Image
-from config import BOT_LOG
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
+from config import BOT_LOG
 from database.list_user_db import add_user_list, rem_user_list
-from database.pdf_db import add_user_pdf, list_pdf_user, rem_user_pdf
 from database.ocr_db import add_user_ocr, list_ocr_user, rem_user_ocr
+from database.pdf_db import add_user_pdf, list_pdf_user, rem_user_pdf
 
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
 
@@ -22,6 +23,7 @@ __1. Mengubah beberapa gambar menjadi file .pdf
 
 LIST = {}
 
+
 @Client.on_callback_query(filters.regex(pattern=r"mode_pdf"))
 async def mode_pdf_cb(b, cb):
     id = cb.message.from_user.id
@@ -31,6 +33,7 @@ async def mode_pdf_cb(b, cb):
         pass
     add_user_pdf(int(id))
     await cb.message.edit("Mode diubah ke pdf")
+
 
 @Client.on_callback_query(filters.regex(pattern=r"mode_ocr"))
 async def mode_ocr_cb(b, cb):
@@ -59,20 +62,25 @@ async def start(client, message):
     if user_id in pdf_user:
         id = message.from_user.id
         if not isinstance(LIST.get(id), list):
-           LIST[id] = []
+            LIST[id] = []
         file_id = str(message.photo.file_id)
         text = await message.reply_text("```Processing...```")
         file = await client.download_media(file_id)
         image = Image.open(file)
-        img = image.convert('RGB')
+        img = image.convert("RGB")
         LIST[id].append(img)
-        await text.edit(f"{len(LIST[id])} Gambar berhasil ditambahkan, klik **/pdf** untuk membuat pdf, atau tambahkan gambar lainnya")
+        await text.edit(
+            f"{len(LIST[id])} Gambar berhasil ditambahkan, klik **/pdf** untuk membuat pdf, atau tambahkan gambar lainnya"
+        )
     elif user_id in ocr_user:
         await message.reply("this is ocr")
     else:
-        await message.reply("Silahkan pilih perintah yang anda inginkan!", reply_markup=keyboard)
+        await message.reply(
+            "Silahkan pilih perintah yang anda inginkan!", reply_markup=keyboard
+        )
 
-@Client.on_message(filters.command(['pdf']))
+
+@Client.on_message(filters.command(["pdf"]))
 async def convert(client, message):
     log_id = int(BOT_LOG)
     msg = await message.reply("Memproses...")
@@ -80,13 +88,13 @@ async def convert(client, message):
     info = message.from_user.mention
     images = LIST.get(id)
     if isinstance(images, list):
-       del LIST[id]
+        del LIST[id]
     if not images:
-       await msg.edit("Tidak ada gambar!")
-       return
+        await msg.edit("Tidak ada gambar!")
+        return
     path = f"{id}" + ".pdf"
-    images[0].save(path, save_all = True, append_images = images[1:])
-    await client.send_document(id, open(path, "rb"), caption = "Pdf sudah siap!")
+    images[0].save(path, save_all=True, append_images=images[1:])
+    await client.send_document(id, open(path, "rb"), caption="Pdf sudah siap!")
     await client.send_message(log_id, f"{info}\n{id}\nStatus: Mengakses bot")
     await msg.delete()
     os.remove(path)
