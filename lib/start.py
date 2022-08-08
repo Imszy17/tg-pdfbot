@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from database.list_user_db import add_user_list, rem_user_list
-from database.pdf_db import add_pdf_user, list_pdf_user
+from database.pdf_db import add_user_pdf, list_pdf_user
 
 START_MSG = """Ini adalah bot yang dapat membantu pekerjaan yang berhubungan dengan file document.
 
