@@ -30,7 +30,7 @@ async def mode_pdf_cb(b, cb):
     try:
         rem_user_ocr(int(id))
     except:
-        pass
+        return True
     add_user_pdf(int(id))
     await cb.message.edit("Mode diubah ke pdf")
 
@@ -41,7 +41,7 @@ async def mode_ocr_cb(b, cb):
     try:
         rem_user_pdf(int(id))
     except:
-        pass
+        return True
     add_user_ocr(int(id))
     await cb.message.edit("Mode diubah ke ocr")
 
