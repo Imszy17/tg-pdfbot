@@ -29,21 +29,20 @@ async def mode_pdf_cb(b, cb):
     id = cb.message.from_user.id
     try:
         rem_user_ocr(int(id))
-    except:
-        return True
-    add_user_pdf(int(id))
-    await cb.message.edit("Mode diubah ke pdf")
-
+        add_user_pdf(int(id))
+        await cb.message.edit("Mode diubah ke pdf")
+    except Exception as e:
+        await cb.message.edit(e)
 
 @Client.on_callback_query(filters.regex(pattern=r"mode_ocr"))
 async def mode_ocr_cb(b, cb):
     id = cb.message.from_user.id
     try:
         rem_user_pdf(int(id))
-    except:
-        return True
-    add_user_ocr(int(id))
-    await cb.message.edit("Mode diubah ke ocr")
+        add_user_ocr(int(id))
+        await cb.message.edit("Mode diubah ke ocr")
+    except Exception as e:
+        await cb.message.edit(e)
 
 
 @Client.on_message(filters.photo)
