@@ -24,17 +24,18 @@ async def mode_pdf_cb(b, cb):
 
 @Client.on_message(filters.command("start"))
 async def start(client, message):
-   keyboard = InlineKeyboardMarkup(
-       [
-           [
-               InlineKeyboardButton(
-                   "PDF",
-                   callback_data="mode_pdf"),
-               InlineKeyboardButton(
-                   "OCR",
-                   callback_data="cls"),
-           ],
-       ])
+    keyboard = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    "PDF",
+                    callback_data="mode_pdf"),
+                InlineKeyboardButton(
+                    "OCR",
+                    callback_data="cls"),
+            ],
+        ]
+    )
     user_id = message.from_user.id
     pdf_user = list_pdf_user()
     if user_id not in pdf_user:
