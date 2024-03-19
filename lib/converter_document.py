@@ -1,10 +1,7 @@
 import os
 
-from aspose import words
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
-from database.list_user_db import add_user_list
 
 
 @Client.on_message(filters.command("pdf2docx"))
@@ -13,7 +10,6 @@ async def pdf2docx_(client, message):
     replied = message.reply_to_message
     userID = message.from_user.id
     try:
-        add_user_list(int(userID))
         if replied.document:
             file = await client.download_media(replied, file_name=f"{userID}_in.pdf")
             doc = words.Document(file)
@@ -32,7 +28,6 @@ async def pdf2docx_(client, message):
 @Client.on_message(filters.command("text2docx"))
 async def text2docx_(client, message):
     userID = message.from_user.id
-    add_user_list(int(userID))
     try:
         input = " ".join(message.command[1:])
         msg = await message.reply("Memproses...")
