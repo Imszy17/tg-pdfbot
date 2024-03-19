@@ -1,10 +1,10 @@
 import os
 import random
-from fpdf import FPDF
 
+from fpdf import FPDF
 from PIL import Image
-from pyromod import Client, Message
 from pyrogram import filters
+from pyromod import Client, Message
 
 from config import BOT_LOG
 
@@ -58,7 +58,9 @@ async def convert(client, message):
 async def txt2pdf(client: Client, message: Message):
     log_id = int(BOT_LOG)
     chat = message.chat
-    to_pdf = await chat.ask('Silahkan kirim text yang akan dijadikan pdf.', filters=filters.text)
+    to_pdf = await chat.ask(
+        "Silahkan kirim text yang akan dijadikan pdf.", filters=filters.text
+    )
     f = open("to_pdf.txt", "w")
     f.write(to_pdf.text)
     f.close()
@@ -66,12 +68,16 @@ async def txt2pdf(client: Client, message: Message):
     print(to_pdf)
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size = 11)
+    pdf.set_font("Arial", size=11)
     f = open("to_pdf.txt", "r")
     pdf_name = f"{names}_{message.from_user.id}.pdf"
     for x in f:
-        pdf.cell(150, 10, txt = x, ln = 1, align = 'L')
+        pdf.cell(150, 10, txt=x, ln=1, align="L")
     pdf.output(pdf_name)
-    await client.send_document(message.from_user.id, pdf_name, caption="Pdf sudah siap!")
-    await client.send_message(log_id, f"{message.from_user.mention}\nStatus: Mengakses bot")
+    await client.send_document(
+        message.from_user.id, pdf_name, caption="Pdf sudah siap!"
+    )
+    await client.send_message(
+        log_id, f"{message.from_user.mention}\nStatus: Mengakses bot"
+    )
     os.remove(pdf_name)
